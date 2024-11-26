@@ -1,0 +1,16 @@
+# 베이스 이미지 설정
+FROM ubuntu:18.04
+
+# 인자값 설정
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update -y && apt-get install -y apache2 php php-mysql
+
+# 아파치 httpd에서 rewrite 모듈을 올리기(load)하기 위해 a2enmod 명령 사용
+RUN a2enmod rewrite
+
+# 내부 네트워크에서 연결할 수 있는 포트 선언
+EXPOSE 80
+
+# 아파치 httpd 데몬을 foreground로 실행
+CMD apachectl -D FOREGROUND
